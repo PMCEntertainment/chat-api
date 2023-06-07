@@ -1,7 +1,7 @@
 
 const express = require('express');
  const app = express();
-// const server = require('http').Server(app);
+const server = require('http').Server(app);
  const io = require('socket.io')(server);
 const bodyParser = require('body-parser');
  app.use(bodyParser.json());
@@ -34,7 +34,7 @@ app.get('/api/test', (req, res) => {
    io.emit('message', message);
    res.json({ success: true });
  });
- app.listen(port, (err) => {
+ server.listen(port, (err) => {
   if (err) throw err;
   console.log(`The app is booming on the legendary port ${port}`);
 });
