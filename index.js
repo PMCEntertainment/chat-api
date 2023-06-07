@@ -5,7 +5,7 @@ const express = require('express');
  const io = require('socket.io')(server);
 const bodyParser = require('body-parser');
  app.use(bodyParser.json());
-
+let port = 8080;
  io.on('connection', socket => {
    console.log('A client connected.');
 
