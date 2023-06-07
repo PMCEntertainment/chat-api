@@ -21,7 +21,11 @@ const bodyParser = require('body-parser');
    });
  });
 
-
+app.get('/api/test', (req, res) => {
+   const message = req.body.message;
+   
+   res.send({ success: true });
+ });
 
  
  app.post('/api/message', (req, res) => {
