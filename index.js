@@ -34,5 +34,9 @@ app.get('/api/test', (req, res) => {
    io.emit('message', message);
    res.json({ success: true });
  });
- 
+ app.listen(port, (err) => {
+  if (err) throw err;
+  console.log(`The app is booming on the legendary port ${port}`);
+});
+module.exports 
  
