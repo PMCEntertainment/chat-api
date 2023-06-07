@@ -38,5 +38,5 @@ app.get('/api/test', (req, res) => {
   if (err) throw err;
   console.log(`The app is booming on the legendary port ${port}`);
 });
-module.exports 
+module.exports app;
  
