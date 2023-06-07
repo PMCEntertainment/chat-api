@@ -1,7 +1,7 @@
 
 const express = require('express');
  const app = express();
- const server = require('http').Server(app);
+// const server = require('http').Server(app);
  const io = require('socket.io')(server);
 const bodyParser = require('body-parser');
  app.use(bodyParser.json());
@@ -35,7 +35,4 @@ app.get('/api/test', (req, res) => {
    res.json({ success: true });
  });
  
- const PORT = 3006;
- server.listen(PORT, () => {
-   console.log(`Server started on port ${PORT}`);
- });
+ 
