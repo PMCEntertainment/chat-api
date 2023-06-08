@@ -39,16 +39,35 @@ io.on('connection', socket => {
 app.use(express.json());
 
 app.get('/v1', (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  // res.send(req.body);
+  res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+  res.setHeader("Access-Control-Allow-Origin",  "*");
+  res.setHeader("Server", "gws");
+  res.setHeader("X-Powered-By", "Phuong My Chi Entertainment");
   res.json({"msg":"hiii"});
 });
+
 // get msg
 app.get('/v1/messages', (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  // res.send(req.body);
+  res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+  res.setHeader("Access-Control-Allow-Origin",  "*");
+  res.setHeader("Server", "gws");
+  res.setHeader("X-Powered-By", "Phuong My Chi Entertainment");
   res.json(messages);
 });
 
 // send msg
 app.post('/v1/messages', (req, res) => {
   const { content, sender } = req.body;
+  res.setHeader("Content-Type", "application/json");
+  // res.send(req.body);
+  res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+  res.setHeader("Access-Control-Allow-Origin",  "*");
+  res.setHeader("Server", "gws");
+  res.setHeader("X-Powered-By", "Phuong My Chi Entertainment");
   const newMessage = { content, sender };
 
   messages.push(newMessage);
