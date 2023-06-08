@@ -1,42 +1,63 @@
 
+// https://api-chat.phuongmychi.vn/v1
 const express = require('express');
- const app = express();
-const server = require('http').Server(app);
- const io = require('socket.io')(server);
-const bodyParser = require('body-parser');
- app.use(bodyParser.json());
-let port = 8080;
- io.on('connection', socket => {
-   console.log('A client connected.');
+const http = require('http');
+const socketIO = require('socket.io');
 
+const app = express();
+const server = http.createServer(app);
+const io = socketIO(server);
 
-   socket.on('message', message => {
-     console.log('Received message:', message);
-     io.emit('message', message);
-   });
+// save user connecting
+let connectedUsers = [];
 
+// save msg
+let messages = [];
 
-   socket.on('disconnect', () => {
-     console.log('A client disconnected.');
-   });
- });
+io.on('connection', socket => {
+  console.log('A user connected');
 
-app.get('/api/test', (req, res) => {
-   const message = req.body.message;
-   
-   res.send({ success: true });
- });
+  socket.on('join', username => {
+    const user = { id: socket.id, username };
+    connectedUsers.push(user);
+    io.emit('users', connectedUsers);
+    console.log(`${username} joined the chat`);
+  });
 
- 
- app.post('/api/message', (req, res) => {
-   const message = req.body.message;
-   console.log('Received API message:', message);
-   io.emit('message', message);
-   res.json({ success: true });
- });
- server.listen(port, (err) => {
-  if (err) throw err;
-  console.log(`The app is booming on the legendary port ${port}`);
+  socket.on('message', message => {
+    messages.push(message);
+    io.emit('message', message);
+  });
+
+  socket.on('disconnect', () => {
+    connectedUsers = connectedUsers.filter(user => user.id !== socket.id);
+    io.emit('users', connectedUsers);
+    console.log('A user disconnected');
+  });
 });
-module.exports = app;
- 
+
+app.use(express.json());
+
+app.get('/v1', (req, res) => {
+  res.json({"msg":"hiii"});
+});
+// get msg
+app.get('/v1/messages', (req, res) => {
+  res.json(messages);
+});
+
+// send msg
+app.post('/v1/messages', (req, res) => {
+  const { content, sender } = req.body;
+  const newMessage = { content, sender };
+
+  messages.push(newMessage);
+  io.emit('message', newMessage);
+
+  res.status(201).json(newMessage);
+});
+
+const port = 8080; 
+server.listen(port, () => {
+  console.log(`Socket server is running on port ${port}`);
+});
