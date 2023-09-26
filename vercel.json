@@ -1,5 +1,5 @@
 {
-  
+  "version": 2,
   "builds": [
     {
       "src": "./index.js",
@@ -11,32 +11,6 @@
       "src": "/(.*)",
       "dest": "/"
     }
-  ],
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "https://chat.phuongmychi.vn"
-        },
-        {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
-        },
-        {
-          "key": "X-Powered-By",
-          "value": "Phuong My Chi Entertainment Co.,Ltd"
-        },
-        {
-          "key": "X-Server",
-          "value": "Phuong My Chi Entertainment"
-        },
-        {
-          "key": "Development-By",
-          "value": "Phuong My Chi Entertainment Co.,Ltd"
-        }
-      ]
-    }
   ]
+  
 }
